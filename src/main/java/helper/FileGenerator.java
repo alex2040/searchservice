@@ -16,7 +16,7 @@ public class FileGenerator {
 
         Logger logger = LoggerFactory.getLogger(FileGenerator.class);
 
-        String defaultPath = System.getProperty("java.io.tmpdir") + "/search";
+        String defaultPath = System.getProperty("java.io.tmpdir") + File.separator + "search";
         System.out.printf("Specify absolute path where files will be generated [default: %s]:", defaultPath);
         Scanner scanner = new Scanner(System.in);
         String path = scanner.nextLine();
@@ -40,7 +40,7 @@ public class FileGenerator {
         }
         for (int i = 0; i < count; i++) {
             try {
-                String fileName = path + "/file" + i;
+                String fileName = path + File.separator + "file" + i;
                 logger.info("Creating file %s \n", fileName);
                 createFile(fileName);
             } catch (IOException e) {

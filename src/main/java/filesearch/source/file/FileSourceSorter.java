@@ -18,7 +18,7 @@ public enum FileSourceSorter {
 
     private static final byte COMMA_ASCII_CODE = 44;
 
-    private static final String FILES_PROPERTIES_FILENAME = "/files.properties";
+    private static final String FILES_PROPERTIES_FILENAME = "files.properties";
 
     private final Logger logger;
 
@@ -47,7 +47,7 @@ public enum FileSourceSorter {
 
     private Properties getFilesProperties(String path) throws IOException {
         Properties properties = new Properties();
-        try (FileInputStream fileInputStream = new FileInputStream(path + FILES_PROPERTIES_FILENAME)) {
+        try (FileInputStream fileInputStream = new FileInputStream(path + File.separator + FILES_PROPERTIES_FILENAME)) {
             properties.load(fileInputStream);
         } catch (FileNotFoundException ignored) {
         }

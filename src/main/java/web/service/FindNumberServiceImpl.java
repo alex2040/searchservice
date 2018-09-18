@@ -4,8 +4,6 @@ import filesearch.engine.SearchException;
 import filesearch.engine.SearchResult;
 import filesearch.engine.file.FileSearchEngine;
 import filesearch.source.SourceException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import search_service.FindNumberResponse;
 
@@ -29,8 +27,6 @@ public class FindNumberServiceImpl implements FindNumberService {
 
     @Override
     public FindNumberResponse findNumber(int number) {
-        Logger logger = LoggerFactory.getLogger(this.getClass());
-        logger.debug("test123123!!!!!!!!!!!!!!");
         FindNumberResponse response = new FindNumberResponse();
         List<SearchResult> searchResults;
         try {
