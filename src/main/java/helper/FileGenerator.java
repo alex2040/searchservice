@@ -1,5 +1,8 @@
 package helper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,6 +13,8 @@ import java.util.Scanner;
 public class FileGenerator {
 
     public static void main(String[] args) {
+
+        Logger logger = LoggerFactory.getLogger(FileGenerator.class);
 
         String defaultPath = System.getProperty("java.io.tmpdir") + "/search";
         System.out.printf("Specify absolute path where files will be generated [default: %s]:", defaultPath);
@@ -36,7 +41,7 @@ public class FileGenerator {
         for (int i = 0; i < count; i++) {
             try {
                 String fileName = path + "/file" + i;
-                System.out.printf("Creating file %s \n", fileName);
+                logger.info("Creating file %s \n", fileName);
                 createFile(fileName);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -44,7 +49,7 @@ public class FileGenerator {
             }
         }
 
-        System.out.println("Finish");
+        logger.info("Finish");
     }
 
     private static void createFile(String file) throws IOException {

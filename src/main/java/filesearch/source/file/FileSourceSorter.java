@@ -1,6 +1,8 @@
 package filesearch.source.file;
 
 import filesearch.source.Source;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.Paths;
@@ -15,9 +17,16 @@ public enum FileSourceSorter {
     private static final int BLOCK_SIZE = 102_428_800;
 
     private static final byte COMMA_ASCII_CODE = 44;
+
     private static final String FILES_PROPERTIES_FILENAME = "/files.properties";
 
+    private final Logger logger;
+
     private volatile boolean inProgress;
+
+    FileSourceSorter() {
+        logger = LoggerFactory.getLogger(this.getClass());
+    }
 
     public void sort(String path) throws IOException {
         if (inProgress) {
@@ -29,7 +38,6 @@ public enum FileSourceSorter {
         while (originFileSourceIterator.hasNext()) {
             Source<InputStream> originSource = originFileSourceIterator.next();
             if (checkIfSortNeeded(originSource, filesProperties)) {
-                System.out.println("sorting file: " + originSource.getName());
                 sortFile(originSource);
                 updateFilesProperties(originSource, path);
             }
@@ -63,6 +71,7 @@ public enum FileSourceSorter {
     }
 
     private void sortFile(Source<InputStream> source) throws IOException {
+        logger.debug("Sorting of [" + source.getName() + "] started");
         long startTime = System.currentTimeMillis();
         BufferedInputStream inputStream = new BufferedInputStream(source.getSource());
         int blockCount = getBlockCount(inputStream);
@@ -93,7 +102,7 @@ public enum FileSourceSorter {
         dataOutputStream.flush();
         dataOutputStream.close();
         long endTime = System.currentTimeMillis();
-        System.out.println("Sorting taken: " + (endTime - startTime) / 1000 + " seconds");
+        logger.debug("Sorting of [" + source.getName() + "] took: " + (endTime - startTime) / 1000 + " seconds");
     }
 
     private void updateFilesProperties(Source<InputStream> source, String path) throws IOException {
