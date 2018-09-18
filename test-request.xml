@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:gs="search-service">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <gs:findNumberRequest>
+            <gs:number>1003752050</gs:number>
+        </gs:findNumberRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
