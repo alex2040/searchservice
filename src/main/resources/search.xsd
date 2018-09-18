@@ -1,0 +1,26 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="search-service"
+           targetNamespace="search-service" elementFormDefault="qualified">
+
+    <xs:element name="findNumberRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="number" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="findNumberResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="code" type="xs:string"/>
+                <xs:element name="fileNames" type="tns:filenameList"/>
+                <xs:element name="error" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="filenameList">
+        <xs:list itemType="xs:string"/>
+    </xs:simpleType>
+
+</xs:schema>

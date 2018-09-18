@@ -16,7 +16,13 @@ public class FileSource implements Source<InputStream> {
 
     @Override
     public String getName() {
-        return file.getAbsolutePath();
+        String absolutePath = file.getAbsolutePath();
+        int endIndex = absolutePath.indexOf(".sorted");
+        if(endIndex!=-1) {
+            return absolutePath.substring(0, endIndex);
+        } else {
+            return absolutePath;
+        }
     }
 
     @Override

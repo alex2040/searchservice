@@ -17,7 +17,8 @@ class FileSourceIterator {
         iterator = Files.newDirectoryStream(
                 path, entry -> {
                     File file = entry.toFile();
-                    return file.isFile() && file.getName().endsWith(".sorted");
+                    return file.isFile() && file.getName().endsWith(".sorted")
+                            && new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().indexOf(".sorted"))).exists();
                 }
         ).iterator();
     }

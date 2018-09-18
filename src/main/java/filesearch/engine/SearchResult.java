@@ -1,6 +1,6 @@
 package filesearch.engine;
 
-class SearchResult {
+public class SearchResult {
     private boolean ok;
     private String result;
     private String error;
@@ -8,15 +8,15 @@ class SearchResult {
     private SearchResult() {
     }
 
-    boolean isOk() {
+    public boolean isOk() {
         return ok;
     }
 
-    String getResult() {
+    public String getResult() {
         return result;
     }
 
-    String getError() {
+    public String getError() {
         return error;
     }
 

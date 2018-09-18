@@ -6,4 +6,6 @@ public interface SourceManager<T> {
 
     Source<T> next();
 
+    void closeAllSources();
+
 }
