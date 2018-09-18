@@ -60,12 +60,10 @@ public abstract class AbstractSearchEngine<T> implements SearchEngine {
         SearchWorker(Source<T> source, int number) {
             this.source = source;
             this.number = number;
-            System.out.println("worker for " + source.getName() + " created");
         }
 
         @Override
         public SearchResult call() {
-            System.out.println("worker for " + source.getName() + " started");
             Searcher searcher = createSearcher(source);
             boolean found;
             try {
@@ -76,7 +74,6 @@ public abstract class AbstractSearchEngine<T> implements SearchEngine {
                         .setError(e.getMessage())
                         .build();
             }
-            System.out.println("worker for " + source.getName() + " stopped");
             if (found) {
                 return SearchResult.newBuilder()
                         .setOk(true)
