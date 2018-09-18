@@ -13,6 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class FindNumberServiceImpl implements FindNumberService {
 
+    private static final String RESPONSE_CODE_NOT_FOUND = "01";
+
+    private static final String RESPONSE_CODE_OK = "00";
+
+    private static final String RESPONSE_CODE_ERROR = "02";
+
     private final FileSearchEngine fileSearchEngine;
 
     public FindNumberServiceImpl(FileSearchEngine fileSearchEngine) {
@@ -26,22 +32,22 @@ public class FindNumberServiceImpl implements FindNumberService {
         try {
             searchResults = fileSearchEngine.search(number);
         } catch (SourceException | SearchException e) {
-            response.setCode("02");
+            response.setCode(RESPONSE_CODE_ERROR);
             response.setError(e.getMessage());
             return response;
         }
         String errors = searchResults.stream().filter(searchResult -> !searchResult.isOk()).map(SearchResult::getError).collect(Collectors.joining(","));
         if (!errors.isEmpty()) {
-            response.setCode("02");
+            response.setCode(RESPONSE_CODE_ERROR);
             response.setError(errors);
             return response;
         }
         List<String> fileNames = searchResults.stream().map(SearchResult::getResult).collect(Collectors.toList());
         if(!fileNames.isEmpty()) {
-            response.setCode("00");
+            response.setCode(RESPONSE_CODE_OK);
             response.getFileNames().addAll(fileNames);
         } else {
-            response.setCode("01");
+            response.setCode(RESPONSE_CODE_NOT_FOUND);
         }
         return response;
     }
