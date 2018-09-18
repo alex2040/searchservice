@@ -30,6 +30,7 @@ public enum FileSourceSorter {
 
     public void sort(String path) throws IOException {
         if (inProgress) {
+            logger.debug("sorting is already in progress. exit");
             return;
         }
         inProgress = true;

@@ -21,7 +21,13 @@ public abstract class AbstractSearchEngine<T> implements SearchEngine {
     @Override
     public List<SearchResult> search(int number) throws SourceException, SearchException {
         logger.debug("searching of [" + number + "] started");
-        SourceManager<T> sourceManager = createSourceManager();
+        SourceManager<T> sourceManager;
+        try {
+            sourceManager = createSourceManager();
+        } catch (SourceException e) {
+            logger.error("searching of [" + number + "] ended with exception: " + e.getMessage());
+            throw e;
+        }
         List<Future<SearchResult>> futureResultList = executeSearchTasks(number, sourceManager);
         return waitSearchingFinish(futureResultList, sourceManager);
     }

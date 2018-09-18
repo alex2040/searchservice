@@ -5,6 +5,7 @@ import filesearch.source.SourceException;
 import filesearch.source.SourceManager;
 import filesearch.source.SourceNotFoundException;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -27,6 +28,7 @@ public class FileSourceManager implements SourceManager<InputStream> {
         OriginFileSourceIterator originIterator;
         try {
             FileSourceSorter.INSTANCE.sort(path);
+            checkAllFilesSorted(sourcePath);
             originIterator = new OriginFileSourceIterator(sourcePath);
             iterator = new FileSourceIterator(sourcePath);
         } catch (IOException e) {
@@ -52,5 +54,15 @@ public class FileSourceManager implements SourceManager<InputStream> {
     @Override
     public void closeAllSources() {
         sourcesToClose.forEach(Source::close);
+    }
+
+    private void checkAllFilesSorted(Path path) throws IOException {
+        OriginFileSourceIterator originFileSourceIterator = new OriginFileSourceIterator(path);
+        while (originFileSourceIterator.hasNext()) {
+            Source<InputStream> source = originFileSourceIterator.next();
+            if (!new File(source.getName() + ".sorted").exists()) {
+                throw new SourceException("some files are not sorted. try later");
+            }
+        }
     }
 }
