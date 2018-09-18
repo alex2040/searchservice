@@ -4,6 +4,9 @@ import filesearch.engine.file.FileSearchEngine;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import javax.sql.DataSource;
 
 @SpringBootApplication
 public class Application {
@@ -19,12 +22,17 @@ public class Application {
     }
 
     @Bean
-    String searchPath() {
-        return config.getSearchPath();
+    FileSearchEngine fileSearchEngine() {
+        return new FileSearchEngine(config.getSearchPath());
     }
 
     @Bean
-    FileSearchEngine fileSearchEngine(String searchPath) {
-        return new FileSearchEngine(searchPath);
+    DataSource searchDataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(config.getDbDriverClassName());
+        dataSource.setUrl(config.getDbUrl());
+        dataSource.setUsername(config.getDbUserName());
+        dataSource.setPassword(config.getDbUserPassword());
+        return dataSource;
     }
 }

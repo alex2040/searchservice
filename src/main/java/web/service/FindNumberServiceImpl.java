@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 @Service
 public class FindNumberServiceImpl implements FindNumberService {
 
-    private static final String RESPONSE_CODE_NOT_FOUND = "01";
+    private static final String RESPONSE_CODE_OK = "00.Result.OK";
 
-    private static final String RESPONSE_CODE_OK = "00";
+    private static final String RESPONSE_CODE_NOT_FOUND = "01.Result.NotFound";
 
-    private static final String RESPONSE_CODE_ERROR = "02";
+    private static final String RESPONSE_CODE_ERROR = "02.Result.Error";
 
     private final FileSearchEngine fileSearchEngine;
 

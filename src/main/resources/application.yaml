@@ -1,4 +1,8 @@
 server.port: 8080
 
 config:
-  searchPath: "/tmp/search"
+  search-path: "/tmp/search"
+  db-driver-class-name: "com.mysql.jdbc.Driver"
+  db-url: "jdbc:mysql://localhost:3306/search"
+  db-user-name: "user"
+  db-user-password: "pwd123"
