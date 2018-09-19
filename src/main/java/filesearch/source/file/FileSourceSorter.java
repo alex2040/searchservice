@@ -1,6 +1,7 @@
 package filesearch.source.file;
 
 import filesearch.source.Source;
+import filesearch.source.SourceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +30,9 @@ public enum FileSourceSorter {
     }
 
     public void sort(String path) throws IOException {
+        logger.debug("check if files sorting needed");
         if (inProgress) {
-            logger.debug("sorting is already in progress. exit");
-            return;
+            throw new SourceException("some files are being sorted, try again later");
         }
         inProgress = true;
         OriginFileSourceIterator originFileSourceIterator = new OriginFileSourceIterator(Paths.get(path));
@@ -44,6 +45,7 @@ public enum FileSourceSorter {
             }
         }
         inProgress = false;
+        logger.debug("sorting ended");
     }
 
     private Properties getFilesProperties(String path) throws IOException {

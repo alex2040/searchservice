@@ -25,10 +25,10 @@ public class SortScheduler {
 
     @Scheduled(fixedDelay = ONE_MINUTE)
     public void sortFiles() {
-        logger.debug("Check if files sort needed");
         try {
             FileSourceSorter.INSTANCE.sort(config.getSearchPath());
         } catch (IOException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
     }
