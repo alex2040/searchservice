@@ -112,7 +112,9 @@ public enum FileSourceSorter {
         Properties filesProperties = getFilesProperties(path);
         String fileName = source.getName();
         filesProperties.setProperty(fileName, String.valueOf(new File(fileName).lastModified()));
-        filesProperties.store(new FileOutputStream(path + FILES_PROPERTIES_FILENAME), null);
+        FileOutputStream outputStream = new FileOutputStream(path + File.separator + FILES_PROPERTIES_FILENAME);
+        filesProperties.store(outputStream, null);
+        outputStream.close();
     }
 
     private int getNumberCount(Source<InputStream> source) throws IOException {
